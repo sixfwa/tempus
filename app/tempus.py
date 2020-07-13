@@ -22,6 +22,17 @@ class Tempus:
             display.print_okgreen(f"-\t{worksheet.title}")
         print("\n")
 
+    def select_worksheet(self):
+        """
+        User will enter the name of a worksheet to be selected
+        """
+        name = input("\nEnter the name of a worksheet:\t")
+        self.secretary.select_worksheet(name)
+        print("\n")
+
+    def show_selected_worksheet(self):
+        display.print_okgreen(f"\n({self.secretary.worksheet_name})\n")
+
     def show_commands(self):
         display.print_bold("\nHere are the commands you can perform:\n")
         for command in commands.commands:
@@ -34,6 +45,12 @@ class Tempus:
             self.show_worksheets()
         elif command == commands.SHOW_COMMANDS:
             self.show_commands()
+        elif command == commands.SELECT_WORKSHEET:
+            self.select_worksheet()
+        elif command == commands.SHOW_SELECTED_WORKSHEET:
+            self.show_selected_worksheet()
+        elif command == commands.CLEAR_SCREEN:
+            display.clear_terminal()
         elif command == commands.BYE:
             display.print_okblue("\n✌️\tPeace Out Homie!!!\t✌️\n")
             exit()
