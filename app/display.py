@@ -36,5 +36,12 @@ def print_bold(message):
     print(f"{bcolors.BOLD}{message}{bcolors.ENDC}")
 
 
+def command_line(selected_worksheet=None):
+    if selected_worksheet:
+        return f"{bcolors.OKGREEN}({selected_worksheet}){bcolors.ENDC} command:\t"
+    else:
+        return "command:\t"
+
+
 def clear_terminal():
     os.system("clear")
