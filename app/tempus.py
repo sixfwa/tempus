@@ -22,6 +22,9 @@ class Tempus:
             display.print_okgreen(f"-\t{worksheet.title}")
         print("\n")
 
+    def set_default(self):
+        self.secretary.set_default_worksheet()
+
     def select_worksheet(self):
         """
         User will enter the name of a worksheet to be selected
@@ -65,6 +68,8 @@ class Tempus:
             self.create_worksheet()
         elif command == commands.SHOW_SELECTED_WORKSHEET:
             self.show_selected_worksheet()
+        elif command == commands.SET_DEFAULT:
+            self.set_default()
         elif command == commands.ADD_ACTIVITY:
             self.add_activity()
         elif command == commands.CLEAR_SCREEN:
@@ -72,6 +77,8 @@ class Tempus:
         elif command == commands.BYE:
             display.print_okblue("\n✌️\tPeace Out Homie!!!\t✌️\n")
             exit()
+        else:
+            display.print_fail("\nNot a valid command\n")
 
     def launch(self):
         self.welcome()

@@ -1,5 +1,6 @@
 from gspread.exceptions import WorksheetNotFound, CellNotFound
 from datetime import date
+import os
 
 from connect import client
 import display
@@ -15,6 +16,14 @@ class Secretary:
         self.spreadsheet = client.open("tempus")
         self.worksheet = None
         self.worksheet_name = ""
+        if self.default_exists():
+            file = open("default.txt", "r")
+            self.select_worksheet(file.read())
+            file.close()
+        print(self.worksheet_name)
+
+    def default_exists(self):
+        return os.path.isfile("./default.txt")
 
     def create_worksheet(self, name, rows="1000", cols="27"):
         """
@@ -35,6 +44,14 @@ class Secretary:
             display.print_okgreen(f"\nWorksheet {name} selected\n")
         except WorksheetNotFound:
             display.print_fail("\nWorksheet does not exist\n")
+
+    def set_default_worksheet(self):
+        if self.worksheet_name:
+            file = open("default.txt", "w")
+            file.write(self.worksheet_name)
+            file.close()
+        else:
+            display.print_fail("\nSelect a worksheet first\n")
 
     def worksheet_initial_setup(self):
         self.worksheet.update_cell(1, 1, "DATE")
