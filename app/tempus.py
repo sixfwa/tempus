@@ -22,6 +22,23 @@ class Tempus:
             display.print_okgreen(f"-\t{worksheet.title}")
         print("\n")
 
+    def show_activities(self):
+        activities = self.secretary.get_activities()[1:]
+        display.print_bold(
+            f"\nActivities listed in {self.secretary.worksheet_name}:\n")
+        for activity in activities:
+            display.print_okgreen(f"-\t{activity}")
+        print("\n")
+
+    def show_selected_worksheet(self):
+        display.print_okgreen(f"\n({self.secretary.worksheet_name})\n")
+
+    def show_commands(self):
+        display.print_bold("\nHere are the commands you can perform:\n")
+        for command in commands.commands:
+            display.print_okgreen(f"-\t{command}")
+        print("\n")
+
     def set_default(self):
         self.secretary.set_default_worksheet()
 
@@ -39,15 +56,6 @@ class Tempus:
         display.print_warning("Initialising Worksheet\n")
         self.secretary.worksheet_initial_setup()
 
-    def show_selected_worksheet(self):
-        display.print_okgreen(f"\n({self.secretary.worksheet_name})\n")
-
-    def show_commands(self):
-        display.print_bold("\nHere are the commands you can perform:\n")
-        for command in commands.commands:
-            display.print_okgreen(f"-\t{command}")
-        print("\n")
-
     def add_activity(self):
         if self.secretary.worksheet_name == "":
             display.print_warning("\nPlease select a worksheet!!!\n")
@@ -62,12 +70,14 @@ class Tempus:
             self.show_worksheets()
         elif command == commands.SHOW_COMMANDS:
             self.show_commands()
+        elif command == commands.SHOW_SELECTED_WORKSHEET:
+            self.show_selected_worksheet()
+        elif command == commands.SHOW_ACTIVITIES:
+            self.show_activities()
         elif command == commands.SELECT_WORKSHEET:
             self.select_worksheet()
         elif command == commands.CREATE_WORKSHEET:
             self.create_worksheet()
-        elif command == commands.SHOW_SELECTED_WORKSHEET:
-            self.show_selected_worksheet()
         elif command == commands.SET_DEFAULT:
             self.set_default()
         elif command == commands.ADD_ACTIVITY:
