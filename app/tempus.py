@@ -28,7 +28,13 @@ class Tempus:
         """
         name = input("\nEnter the name of a worksheet:\t")
         self.secretary.select_worksheet(name)
-        print("\n")
+
+    def create_worksheet(self):
+        name = input("\nEnter the name of a worksheet:\t")
+        self.secretary.create_worksheet(name)
+        self.secretary.select_worksheet(name)
+        display.print_warning("Initialising Worksheet\n")
+        self.secretary.worksheet_initial_setup()
 
     def show_selected_worksheet(self):
         display.print_okgreen(f"\n({self.secretary.worksheet_name})\n")
@@ -39,6 +45,14 @@ class Tempus:
             display.print_okgreen(f"-\t{command}")
         print("\n")
 
+    def add_activity(self):
+        if self.secretary.worksheet_name == "":
+            display.print_warning("\nPlease select a worksheet!!!\n")
+        else:
+            activity_name = input("\nEnter name of the activity:\t")
+            self.secretary.add_activity(activity_name)
+        print("\n")
+
     def controller(self, command):
         command = command.lower()
         if command == commands.SHOW_WORKSHEETS:
@@ -47,8 +61,12 @@ class Tempus:
             self.show_commands()
         elif command == commands.SELECT_WORKSHEET:
             self.select_worksheet()
+        elif command == commands.CREATE_WORKSHEET:
+            self.create_worksheet()
         elif command == commands.SHOW_SELECTED_WORKSHEET:
             self.show_selected_worksheet()
+        elif command == commands.ADD_ACTIVITY:
+            self.add_activity()
         elif command == commands.CLEAR_SCREEN:
             display.clear_terminal()
         elif command == commands.BYE:
@@ -58,7 +76,11 @@ class Tempus:
     def launch(self):
         self.welcome()
         while True:
-            self.controller(input("command:\t"))
+            if self.secretary.worksheet_name == "":
+                self.controller(input(display.command_line()))
+            else:
+                self.controller(
+                    input(display.command_line(self.secretary.worksheet_name)))
 
 
 tempus = Tempus()
